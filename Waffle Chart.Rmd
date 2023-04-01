@@ -1,0 +1,30 @@
+---
+title: "Waffle Chart"
+output: html_document
+date: "2023-04-01"
+---
+
+```{r setup, include=FALSE}
+install.packages("waffle")
+install.packages("extrafont")
+library(waffle)
+library(extrafont)
+library(ggplot2)
+library(dplyr)
+
+Waffle <- c("Belgian", "Homestyle", "Buttermilk", "Pancakes > Waffles")
+Votes <- c(40, 9, 15, 17)
+
+waffle_data <- data.frame(Waffle, Votes)
+waffle_data <- waffle_data %>% mutate(total = sum(Votes),
+                                      perct = round((Votes/total)*100))
+
+waffle(c("Belgian (49%)" = 49, "Homestyle (11%)" = 11, "Buttermilk (19%)" = 19,
+         "Pancakes > Waffles (21%)" = 21), rows = 10, 
+       colors = c("#8d3c06","goldenrod1", "#ed813c", "#f5bf87"),
+       title = "Favorite Type of Waffle") + 
+       labs(caption = "Data source: Social Media Survey") +
+       theme(plot.title = element_text(hjust = 0.5))
+
+```
+
